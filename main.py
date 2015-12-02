@@ -11,7 +11,6 @@ def main():
 
     ac = Ac_dialog()
     ac.show()
-    ac.read_tag()
     sys.exit(app.exec_())
 
 if __name__ == '__main__':

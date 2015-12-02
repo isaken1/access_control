@@ -77,9 +77,9 @@ class AC_Dialog(QtGui.QDialog):
             self.tag = str(response.split(':')[1])
             #tag = str(response.split('#')[0])
             print "Tag lida: {0}".format(self.tag)
-            #self.label.setText(self.tag)
+            self.label.setText(self.tag)
             self.port.flush()
-            return self.tag
+            #return self.tag
         except KeyboardInterrupt:
             return
         #finally:
