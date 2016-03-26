@@ -70,21 +70,21 @@ class AC_Dialog(QtGui.QDialog):
     def retranslateUi(self, AC_Dialog):
         AC_Dialog.setWindowTitle(_translate("AC_Dialog", "Controle de Acesso", None))
 
+    #Leitura e formatação da tag como string legível no formato XXXXXXXX
     def read_tag(self):
         try:
             self.label.setText('Por favor, insira uma tag')
             response = self.port.read(15)
             self.tag = str(response.split(':')[1])
-            #tag = str(response.split('#')[0])
             print "Tag lida: {0}".format(self.tag)
             self.label.setText(self.tag)
             self.port.flush()
-            #return self.tag
+
         except KeyboardInterrupt:
             return
-        #finally:
-            #self.port.close()
 
+
+    #Execução do código de criação da tabela Usuário, caso ela não exista.
     def create_table(self):
         try:
             self.cur.executescript('''CREATE TABLE IF NOT EXISTS Usuario 
@@ -103,6 +103,7 @@ class AC_Dialog(QtGui.QDialog):
             if self.con:
                 self.con.close()
 
+    #Função de verificação do código da tag
     def check_tag(self):
         try:
             self.cur.execute("SELECT UserID, Nome FROM Usuario WHERE Tag = ?",
