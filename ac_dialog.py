@@ -87,7 +87,9 @@ class AC_Dialog(QtGui.QDialog):
 
     def create_table(self):
         try:
-            self.cur.executescript('CREATE TABLE IF NOT EXISTS Usuario (UserID INTEGER PRIMARY KEY, UltimaEntrada TEXT, Nome TEXT, Tag TEXT); CREATE UNIQUE INDEX TagUnrepeatable ON Usuario (Tag);')
+            self.cur.executescript('''CREATE TABLE IF NOT EXISTS Usuario 
+            (UserID INTEGER PRIMARY KEY, UltimaEntrada TEXT, Nome TEXT, Tag TEXT)
+            CREATE UNIQUE INDEX TagUnrepeatable ON Usuario (Tag);''')
             self.con.commit()
 
         except lite.Error, e:
@@ -108,7 +110,8 @@ class AC_Dialog(QtGui.QDialog):
             user = self.cur.fetchone()
             print 'Olá {0}. Hora da entrada: {1}'.format(user[1],
                  time.strftime("%c"))
-            self.cur.execute("UPDATE Usuario SET UltimaEntrada = DateTime(CURRENT_TIMESTAMP, 'localtime') WHERE UserID = {0};".format(user[0]))
+            self.cur.execute("""UPDATE Usuario SET UltimaEntrada = DateTime(CURRENT_TIMESTAMP, 'localtime')
+            WHERE UserID = {0};".format(user[0])""")
             self.con.commit()
             QtGui.QMessageBox.showMessage('Olá {0}. Hora da entrada: {1}'.format(user[1],
                  time.strftime("%c")))
